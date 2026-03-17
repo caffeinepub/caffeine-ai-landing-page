@@ -8,10 +8,174 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const idlService = IDL.Service({});
+export const Assignment = IDL.Record({
+  'id' : IDL.Nat,
+  'title' : IDL.Text,
+  'createdAt' : IDL.Int,
+  'completed' : IDL.Bool,
+  'dueDate' : IDL.Int,
+  'description' : IDL.Text,
+  'subjectId' : IDL.Nat,
+});
+export const Subject = IDL.Record({
+  'id' : IDL.Nat,
+  'name' : IDL.Text,
+  'createdAt' : IDL.Int,
+  'colorHex' : IDL.Text,
+});
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
+export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+export const StudySession = IDL.Record({
+  'id' : IDL.Nat,
+  'date' : IDL.Int,
+  'createdAt' : IDL.Int,
+  'durationSeconds' : IDL.Nat,
+  'subjectId' : IDL.Nat,
+});
+export const SubjectStats = IDL.Record({
+  'totalSeconds' : IDL.Nat,
+  'subjectId' : IDL.Nat,
+});
+export const DailyStats = IDL.Record({
+  'totalSeconds' : IDL.Nat,
+  'dayIndex' : IDL.Nat,
+});
+
+export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'addAssignment' : IDL.Func(
+      [IDL.Nat, IDL.Text, IDL.Text, IDL.Int],
+      [Assignment],
+      [],
+    ),
+  'addSubject' : IDL.Func([IDL.Text, IDL.Text], [Subject], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'deleteAssignment' : IDL.Func([IDL.Nat], [IDL.Bool], []),
+  'deleteSubject' : IDL.Func([IDL.Nat], [IDL.Bool], []),
+  'getAssignments' : IDL.Func([], [IDL.Vec(Assignment)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getSessionsByDateRange' : IDL.Func(
+      [IDL.Int, IDL.Int],
+      [IDL.Vec(StudySession)],
+      ['query'],
+    ),
+  'getStudySessions' : IDL.Func([], [IDL.Vec(StudySession)], ['query']),
+  'getSubjectStats' : IDL.Func([], [IDL.Vec(SubjectStats)], ['query']),
+  'getSubjects' : IDL.Func([], [IDL.Vec(Subject)], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'getWeeklyStats' : IDL.Func([IDL.Int], [IDL.Vec(DailyStats)], ['query']),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'logStudySession' : IDL.Func([IDL.Nat, IDL.Nat, IDL.Int], [StudySession], []),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'toggleAssignment' : IDL.Func([IDL.Nat], [IDL.Opt(Assignment)], []),
+  'updateAssignment' : IDL.Func(
+      [IDL.Nat, IDL.Text, IDL.Text, IDL.Int],
+      [IDL.Opt(Assignment)],
+      [],
+    ),
+  'updateSubject' : IDL.Func(
+      [IDL.Nat, IDL.Text, IDL.Text],
+      [IDL.Opt(Subject)],
+      [],
+    ),
+});
 
 export const idlInitArgs = [];
 
-export const idlFactory = ({ IDL }) => { return IDL.Service({}); };
+export const idlFactory = ({ IDL }) => {
+  const Assignment = IDL.Record({
+    'id' : IDL.Nat,
+    'title' : IDL.Text,
+    'createdAt' : IDL.Int,
+    'completed' : IDL.Bool,
+    'dueDate' : IDL.Int,
+    'description' : IDL.Text,
+    'subjectId' : IDL.Nat,
+  });
+  const Subject = IDL.Record({
+    'id' : IDL.Nat,
+    'name' : IDL.Text,
+    'createdAt' : IDL.Int,
+    'colorHex' : IDL.Text,
+  });
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
+  const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  const StudySession = IDL.Record({
+    'id' : IDL.Nat,
+    'date' : IDL.Int,
+    'createdAt' : IDL.Int,
+    'durationSeconds' : IDL.Nat,
+    'subjectId' : IDL.Nat,
+  });
+  const SubjectStats = IDL.Record({
+    'totalSeconds' : IDL.Nat,
+    'subjectId' : IDL.Nat,
+  });
+  const DailyStats = IDL.Record({
+    'totalSeconds' : IDL.Nat,
+    'dayIndex' : IDL.Nat,
+  });
+  
+  return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'addAssignment' : IDL.Func(
+        [IDL.Nat, IDL.Text, IDL.Text, IDL.Int],
+        [Assignment],
+        [],
+      ),
+    'addSubject' : IDL.Func([IDL.Text, IDL.Text], [Subject], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'deleteAssignment' : IDL.Func([IDL.Nat], [IDL.Bool], []),
+    'deleteSubject' : IDL.Func([IDL.Nat], [IDL.Bool], []),
+    'getAssignments' : IDL.Func([], [IDL.Vec(Assignment)], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getSessionsByDateRange' : IDL.Func(
+        [IDL.Int, IDL.Int],
+        [IDL.Vec(StudySession)],
+        ['query'],
+      ),
+    'getStudySessions' : IDL.Func([], [IDL.Vec(StudySession)], ['query']),
+    'getSubjectStats' : IDL.Func([], [IDL.Vec(SubjectStats)], ['query']),
+    'getSubjects' : IDL.Func([], [IDL.Vec(Subject)], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'getWeeklyStats' : IDL.Func([IDL.Int], [IDL.Vec(DailyStats)], ['query']),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'logStudySession' : IDL.Func(
+        [IDL.Nat, IDL.Nat, IDL.Int],
+        [StudySession],
+        [],
+      ),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'toggleAssignment' : IDL.Func([IDL.Nat], [IDL.Opt(Assignment)], []),
+    'updateAssignment' : IDL.Func(
+        [IDL.Nat, IDL.Text, IDL.Text, IDL.Int],
+        [IDL.Opt(Assignment)],
+        [],
+      ),
+    'updateSubject' : IDL.Func(
+        [IDL.Nat, IDL.Text, IDL.Text],
+        [IDL.Opt(Subject)],
+        [],
+      ),
+  });
+};
 
 export const init = ({ IDL }) => { return []; };

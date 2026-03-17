@@ -89,10 +89,403 @@ export class ExternalBlob {
         return this;
     }
 }
-export interface backendInterface {
+export interface SubjectStats {
+    totalSeconds: bigint;
+    subjectId: bigint;
 }
+export interface DailyStats {
+    totalSeconds: bigint;
+    dayIndex: bigint;
+}
+export interface Assignment {
+    id: bigint;
+    title: string;
+    createdAt: bigint;
+    completed: boolean;
+    dueDate: bigint;
+    description: string;
+    subjectId: bigint;
+}
+export interface StudySession {
+    id: bigint;
+    date: bigint;
+    createdAt: bigint;
+    durationSeconds: bigint;
+    subjectId: bigint;
+}
+export interface Subject {
+    id: bigint;
+    name: string;
+    createdAt: bigint;
+    colorHex: string;
+}
+export interface UserProfile {
+    name: string;
+}
+export enum UserRole {
+    admin = "admin",
+    user = "user",
+    guest = "guest"
+}
+export interface backendInterface {
+    _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
+    addAssignment(subjectId: bigint, title: string, description: string, dueDate: bigint): Promise<Assignment>;
+    addSubject(name: string, colorHex: string): Promise<Subject>;
+    assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
+    deleteAssignment(id: bigint): Promise<boolean>;
+    deleteSubject(id: bigint): Promise<boolean>;
+    getAssignments(): Promise<Array<Assignment>>;
+    getCallerUserProfile(): Promise<UserProfile | null>;
+    getCallerUserRole(): Promise<UserRole>;
+    getSessionsByDateRange(startDate: bigint, endDate: bigint): Promise<Array<StudySession>>;
+    getStudySessions(): Promise<Array<StudySession>>;
+    getSubjectStats(): Promise<Array<SubjectStats>>;
+    getSubjects(): Promise<Array<Subject>>;
+    getUserProfile(user: Principal): Promise<UserProfile | null>;
+    getWeeklyStats(weekStartDate: bigint): Promise<Array<DailyStats>>;
+    isCallerAdmin(): Promise<boolean>;
+    logStudySession(subjectId: bigint, durationSeconds: bigint, date: bigint): Promise<StudySession>;
+    saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    toggleAssignment(id: bigint): Promise<Assignment | null>;
+    updateAssignment(id: bigint, title: string, description: string, dueDate: bigint): Promise<Assignment | null>;
+    updateSubject(id: bigint, name: string, colorHex: string): Promise<Subject | null>;
+}
+import type { Assignment as _Assignment, Subject as _Subject, UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
+    async _initializeAccessControlWithSecret(arg0: string): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor._initializeAccessControlWithSecret(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor._initializeAccessControlWithSecret(arg0);
+            return result;
+        }
+    }
+    async addAssignment(arg0: bigint, arg1: string, arg2: string, arg3: bigint): Promise<Assignment> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addAssignment(arg0, arg1, arg2, arg3);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addAssignment(arg0, arg1, arg2, arg3);
+            return result;
+        }
+    }
+    async addSubject(arg0: string, arg1: string): Promise<Subject> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.addSubject(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.addSubject(arg0, arg1);
+            return result;
+        }
+    }
+    async assignCallerUserRole(arg0: Principal, arg1: UserRole): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n1(this._uploadFile, this._downloadFile, arg1));
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.assignCallerUserRole(arg0, to_candid_UserRole_n1(this._uploadFile, this._downloadFile, arg1));
+            return result;
+        }
+    }
+    async deleteAssignment(arg0: bigint): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteAssignment(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteAssignment(arg0);
+            return result;
+        }
+    }
+    async deleteSubject(arg0: bigint): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteSubject(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteSubject(arg0);
+            return result;
+        }
+    }
+    async getAssignments(): Promise<Array<Assignment>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAssignments();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAssignments();
+            return result;
+        }
+    }
+    async getCallerUserProfile(): Promise<UserProfile | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCallerUserProfile();
+                return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCallerUserProfile();
+            return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getCallerUserRole(): Promise<UserRole> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getCallerUserRole();
+                return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getCallerUserRole();
+            return from_candid_UserRole_n4(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getSessionsByDateRange(arg0: bigint, arg1: bigint): Promise<Array<StudySession>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getSessionsByDateRange(arg0, arg1);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getSessionsByDateRange(arg0, arg1);
+            return result;
+        }
+    }
+    async getStudySessions(): Promise<Array<StudySession>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getStudySessions();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getStudySessions();
+            return result;
+        }
+    }
+    async getSubjectStats(): Promise<Array<SubjectStats>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getSubjectStats();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getSubjectStats();
+            return result;
+        }
+    }
+    async getSubjects(): Promise<Array<Subject>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getSubjects();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getSubjects();
+            return result;
+        }
+    }
+    async getUserProfile(arg0: Principal): Promise<UserProfile | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getUserProfile(arg0);
+                return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getUserProfile(arg0);
+            return from_candid_opt_n3(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getWeeklyStats(arg0: bigint): Promise<Array<DailyStats>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getWeeklyStats(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getWeeklyStats(arg0);
+            return result;
+        }
+    }
+    async isCallerAdmin(): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.isCallerAdmin();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.isCallerAdmin();
+            return result;
+        }
+    }
+    async logStudySession(arg0: bigint, arg1: bigint, arg2: bigint): Promise<StudySession> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.logStudySession(arg0, arg1, arg2);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.logStudySession(arg0, arg1, arg2);
+            return result;
+        }
+    }
+    async saveCallerUserProfile(arg0: UserProfile): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.saveCallerUserProfile(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.saveCallerUserProfile(arg0);
+            return result;
+        }
+    }
+    async toggleAssignment(arg0: bigint): Promise<Assignment | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.toggleAssignment(arg0);
+                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.toggleAssignment(arg0);
+            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async updateAssignment(arg0: bigint, arg1: string, arg2: string, arg3: bigint): Promise<Assignment | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateAssignment(arg0, arg1, arg2, arg3);
+                return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateAssignment(arg0, arg1, arg2, arg3);
+            return from_candid_opt_n6(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async updateSubject(arg0: bigint, arg1: string, arg2: string): Promise<Subject | null> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.updateSubject(arg0, arg1, arg2);
+                return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.updateSubject(arg0, arg1, arg2);
+            return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
+        }
+    }
+}
+function from_candid_UserRole_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: _UserRole): UserRole {
+    return from_candid_variant_n5(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n3(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_UserProfile]): UserProfile | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Assignment]): Assignment | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n7(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: [] | [_Subject]): Subject | null {
+    return value.length === 0 ? null : value[0];
+}
+function from_candid_variant_n5(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: {
+    admin: null;
+} | {
+    user: null;
+} | {
+    guest: null;
+}): UserRole {
+    return "admin" in value ? UserRole.admin : "user" in value ? UserRole.user : "guest" in value ? UserRole.guest : value;
+}
+function to_candid_UserRole_n1(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): _UserRole {
+    return to_candid_variant_n2(_uploadFile, _downloadFile, value);
+}
+function to_candid_variant_n2(_uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, value: UserRole): {
+    admin: null;
+} | {
+    user: null;
+} | {
+    guest: null;
+} {
+    return value == UserRole.admin ? {
+        admin: null
+    } : value == UserRole.user ? {
+        user: null
+    } : value == UserRole.guest ? {
+        guest: null
+    } : value;
 }
 export interface CreateActorOptions {
     agent?: Agent;

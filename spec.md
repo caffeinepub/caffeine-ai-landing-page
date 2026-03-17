@@ -1,37 +1,41 @@
-# Caffeine AI Landing Page
+# StudyTrack - Student Study & Assignment Tracker
 
 ## Current State
-The project currently has a personal portfolio website with sections: Hero, About, Skills, Projects, Experience, Contact, and Footer. It has dark/light mode and basic animations. The backend has no functional endpoints.
+New project. No existing code.
 
 ## Requested Changes (Diff)
 
 ### Add
-- A stunning Caffeine AI product landing page replacing the personal portfolio content
-- Hero section with bold headline, sub-headline, and CTA buttons ("Start Building" / "See How It Works")
-- "How It Works" section with 3-step visual flow (Describe -> Build -> Deploy)
-- Features/Benefits section highlighting key platform capabilities
-- Use Cases section (entrepreneurs, creators, businesses)
-- Technology section explaining ICP/blockchain foundation
-- Social proof / stats section (e.g. "Built on ICP", "No code required", "Deploy in minutes")
-- FAQ section with common questions
-- Final CTA section with strong conversion copy
-- Smooth scroll, animated section reveals, and polished micro-interactions
+- Subject management: add, edit, delete subjects with color coding
+- Study timer: start/stop/pause Pomodoro-style timer per subject, log sessions automatically
+- Assignment tracker: add assignments with subject, due date, title, description, and completion status
+- Homework reminders: browser-based notifications for upcoming due dates (today/tomorrow)
+- Weekly dashboard: daily study time bar chart, weekly total hours, per-subject breakdown, streak counter
+- Mobile-first layout with bottom navigation (Dashboard, Subjects, Timer, Assignments)
 
 ### Modify
-- Replace all personal portfolio content with Caffeine AI branding and messaging
-- Update Navbar links to match new sections (Features, How It Works, Use Cases, FAQ)
-- Update Footer with Caffeine AI branding
+- N/A (new project)
 
 ### Remove
-- Skills section (personal portfolio specific)
-- Experience timeline (personal portfolio specific)
-- Projects section (replaced by Use Cases)
+- N/A (new project)
 
 ## Implementation Plan
-1. Replace all component files with Caffeine AI landing page content
-2. Build new components: HowItWorks, Features, UseCases, TechSection, Stats, FAQ, FinalCTA
-3. Update Navbar with new navigation links and Caffeine branding
-4. Update Hero with Caffeine AI headline and CTA
-5. Update Footer with Caffeine AI branding and links
-6. Apply smooth scroll behavior and animated reveals throughout
-7. Ensure dark/light mode works correctly across all new sections
+
+### Backend (Motoko)
+- `Subject` record: id, name, colorHex, createdAt
+- `Assignment` record: id, subjectId, title, description, dueDate (Unix timestamp), completed, createdAt
+- `StudySession` record: id, subjectId, durationSeconds, date (Unix timestamp), createdAt
+- CRUD for subjects: addSubject, getSubjects, updateSubject, deleteSubject
+- CRUD for assignments: addAssignment, getAssignments, updateAssignment, deleteAssignment, toggleAssignment
+- Study sessions: logStudySession, getStudySessions, getSessionsByDateRange
+- Aggregation: getWeeklyStats (total seconds per day for last 7 days), getSubjectStats (total per subject)
+
+### Frontend (React + TypeScript)
+- Mobile-first layout, max-width 430px centered, with bottom tab navigation
+- 4 tabs: Dashboard, Subjects, Timer, Assignments
+- Dashboard: weekly bar chart (7 days), total weekly hours card, per-subject pie/bar, upcoming assignments list, streak counter
+- Subjects tab: list of subjects with color swatches, add/edit/delete modals
+- Timer tab: subject selector, large countdown display, start/pause/stop controls, session history list
+- Assignments tab: grouped by due date (overdue, today, upcoming), add assignment modal, toggle complete
+- Reminders: browser Notification API on app load for assignments due today/tomorrow
+- Persistent state via backend canister calls

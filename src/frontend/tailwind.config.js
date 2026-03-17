@@ -17,9 +17,9 @@ export default {
         extend: {
             fontFamily: {
                 display: ['Bricolage Grotesque', 'system-ui', 'sans-serif'],
-                body: ['Sora', 'system-ui', 'sans-serif'],
-                sans: ['Sora', 'system-ui', 'sans-serif'],
-                mono: ['Geist Mono', 'monospace'],
+                body: ['Figtree', 'system-ui', 'sans-serif'],
+                sans: ['Figtree', 'system-ui', 'sans-serif'],
+                mono: ['Bricolage Grotesque', 'monospace'],
             },
             colors: {
                 border: 'oklch(var(--border))',
@@ -55,14 +55,15 @@ export default {
                     DEFAULT: 'oklch(var(--card))',
                     foreground: 'oklch(var(--card-foreground))'
                 },
-                cyan: {
-                    DEFAULT: 'oklch(var(--cyan))',
-                    bright: 'oklch(var(--cyan-bright))',
-                    dark: 'oklch(var(--cyan-dark))',
-                },
-                indigo: {
-                    DEFAULT: 'oklch(var(--indigo))',
-                    dark: 'oklch(var(--indigo-dark))',
+                study: {
+                    purple: 'oklch(var(--study-purple))',
+                    emerald: 'oklch(var(--study-emerald))',
+                    amber: 'oklch(var(--study-amber))',
+                    coral: 'oklch(var(--study-coral))',
+                    sky: 'oklch(var(--study-sky))',
+                    rose: 'oklch(var(--study-rose))',
+                    teal: 'oklch(var(--study-teal))',
+                    indigo: 'oklch(var(--study-indigo))',
                 },
                 chart: {
                     1: 'oklch(var(--chart-1))',
@@ -87,23 +88,24 @@ export default {
                 md: 'calc(var(--radius) - 2px)',
                 sm: 'calc(var(--radius) - 4px)',
                 xl: 'calc(var(--radius) + 4px)',
-                '2xl': 'calc(var(--radius) + 8px)',
+                '2xl': 'calc(var(--radius) + 12px)',
+                '3xl': 'calc(var(--radius) + 20px)',
             },
             boxShadow: {
-                xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
-                'cyan-glow': '0 0 20px oklch(0.82 0.20 196 / 0.35)',
-                'cyan-glow-lg': '0 0 48px oklch(0.82 0.20 196 / 0.22), 0 0 100px oklch(0.82 0.20 196 / 0.08)',
-                'card-hover': '0 20px 60px oklch(0.07 0.02 258 / 0.5)',
-                'glass': '0 8px 32px oklch(0.07 0.02 258 / 0.3), inset 0 1px 0 oklch(0.96 0.008 250 / 0.06)',
+                xs: '0 1px 2px 0 oklch(0.18 0.02 260 / 0.05)',
+                card: '0 2px 8px oklch(0.18 0.02 260 / 0.06), 0 0 0 1px oklch(0.88 0.012 85 / 0.5)',
+                'card-hover': '0 4px 16px oklch(0.18 0.02 260 / 0.1), 0 0 0 1px oklch(0.88 0.012 85)',
+                'nav': '0 -4px 20px oklch(0.18 0.02 260 / 0.06)',
+                'timer': '0 8px 32px oklch(0.56 0.22 264 / 0.2)',
+                'fab': '0 4px 20px oklch(0.56 0.22 264 / 0.35)',
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
                 'accordion-up': 'accordion-up 0.2s ease-out',
-                'float': 'float 8s ease-in-out infinite',
-                'glow-pulse': 'glow-pulse 3s ease-in-out infinite',
-                'pulse-ring': 'pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite',
-                'beam-scan': 'beam-scan 3.5s ease-in-out infinite',
-                'shimmer': 'shimmer 2.5s linear infinite',
+                'fade-in': 'fade-in 0.3s ease both',
+                'slide-up': 'slide-up 0.4s cubic-bezier(0.22,1,0.36,1) both',
+                'scale-in': 'scale-in 0.25s ease both',
+                'colon-blink': 'timer-pulse 1s ease-in-out infinite',
             },
             keyframes: {
                 'accordion-down': {
